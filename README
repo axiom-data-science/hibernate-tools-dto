@@ -1,0 +1,266 @@
+hibernate-tools-dto
+-------------------
+
+This project extends the Hibernate Tools project to add support for generation of 
+a number of DTO related classes. The project's exporter and templates are used in
+ Hibernate Tools' hbmtemplate. The main influence for creating the project was
+the need to use Hibernate Tools to generate a complete set of classes for seamless
+use in a Java/Hibernate/Flex project using the DTO pattern. It should also serve
+as a good example for those looking to make their own custom Hibernate Tools
+code generation output formats.
+
+When creating DTOs and Actionscript VOs, complex data types that don't make sense for
+direct transfer are skipped (geometries, CLOBs, etc). See the translator package for
+details. These data types usually require the intervention of custom accessors that
+can be placed in overridden createDTO and ingestDTO methods in custom POJO classes.
+For example, for a geometry you could create custom DTO properties to hold encoded
+polyline data, and write code in the POJO's createDTO method to translate the geometry
+to an encoded polyline string. 
+
+Another note: this project has only been tested on fairly clean and simple data structures
+(no compound primary keys, no component classes). It does work with Hibernate classes with
+inheritance.
+
+
+
+Templates
+
+pojoWithDTO - POJO with added createDTO and injestDTO methods.
+
+pojoCustom - Simple empty POJO class that can extend generated POJOs and hold custom code.
+
+DTO - DTO object suitable for passing to client tier (no Hibernate proxies, lazy loading, etc)
+
+DTOCustom - Simple empty DTO class that can extend generated DTOs and hold custom code.
+
+actionscriptDTO - An Actionscript DTO that mirrors the Java DTO.
+
+actionscriptDTOCustom - Simple empty Actionscript DTO class then can extend generated classes.
+
+
+
+Additional configuration parameters
+
+In addition to the normal hbmtemplate parameters, these additional parameters are available:
+
+packagename - Override the package name
+
+dtoPackageName - Set the DTO package name in POJOs/VOs (POJOs need to import the DTO classes)
+
+universalAncestor - All generated classes will extend this class (unless the classes use inheritance, in
+                    which case the root class will inherit from the universal ancestor)
+
+remoteClassPackage - In Actionscript DTOs, override the RemoteClass alias package
+
+excludedTypesList - Exclude Hibernate types from Actionscript classes (comma separated)
+
+suffixDTOParentIds - Boolean that indicated whether foreign keys should be suffixed by their referenced class
+                     name in DTOs. This is useful when each class has the same primary key name (e.g. "id"),
+                     because otherwise there would be duplicate fields named "id" in a DTO with one or more
+                     relationships. As an example, an Order class with a many to one relationship to a Customers
+                     class, both having primary keys named id, would have its foreign key variable named as
+                     idCustomer when suffixDTOParentIds is set to true.
+
+
+
+Example Maven usage
+
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>hibernate3-maven-plugin</artifactId>
+    <version>2.2</version>
+    <executions>			 
+		<execution>
+            <id>hbmtemplate_dto</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>hbmtemplate</goal>
+            </goals>
+            <configuration>
+            	<components>
+            		<component>
+            			<name>hbmtemplate</name>
+            			<outputDirectory>target/generated-sources/hibernate3</outputDirectory>
+            			<implementation>configuration</implementation>
+            		</component>
+            	</components>
+            	<componentProperties>
+                    <configurationFile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationFile>
+                    <packagename>com.thepackage.dto</packagename>
+                    <jdk5>true</jdk5>
+                    <filepattern>{package-name}/{class-name}DTOGenerated.java</filepattern>
+                    <exporterclass>com.axiomalaska.hibernatetoolsdto.EnhancedPOJOExporter</exporterclass>
+                    <template>DTO/DTO.ftl</template>
+                    <universalAncestor>AbstractDTO</universalAncestor>
+            	</componentProperties>
+            </configuration>
+        </execution>
+         
+		<execution>
+            <id>hbmtemplate_vo</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>hbmtemplate</goal>
+            </goals>
+            <configuration>
+            	<components>
+            		<component>
+            			<name>hbmtemplate</name>
+            			<outputDirectory>target/generated-sources/hibernate3</outputDirectory>		            			
+            			<implementation>configuration</implementation>
+            		</component>
+            	</components>
+            	<componentProperties>
+                    <configurationFile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationFile>
+                    <packagename>com.thepackage.vo</packagename>
+                    <jdk5>true</jdk5>
+                    <filepattern>{package-name}/{class-name}Generated.java</filepattern>
+                    <exporterclass>com.axiomalaska.hibernatetoolsdto.EnhancedPOJOExporter</exporterclass>
+                    <template>pojoWithDTO/Pojo.ftl</template>
+                    <dtoPackageName>com.thepackage.dto</dtoPackageName>
+                    <universalAncestor>AbstractVO</universalAncestor>
+            	</componentProperties>
+            </configuration>
+        </execution>
+        
+		<execution>
+            <id>hbmtemplate_vo_custom</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>hbmtemplate</goal>
+            </goals>
+            <configuration>
+            	<components>
+            		<component>
+            			<name>hbmtemplate</name>
+            			<outputDirectory>target/hibernate3/generated-java-custom</outputDirectory>
+            			<implementation>configuration</implementation>
+            		</component>
+            	</components>
+            	<componentProperties>
+                    <configurationFile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationFile>
+                    <packagename>com.thepackage.vo</packagename>
+                    <jdk5>true</jdk5>
+                    <filepattern>{package-name}/{class-name}.java</filepattern>
+                    <exporterclass>com.axiomalaska.hibernatetoolsdto.EnhancedPOJOExporter</exporterclass>
+                    <template>pojoCustom/CustomPojo.ftl</template>
+            	</componentProperties>
+            </configuration>
+        </execution>
+		<execution>
+            <id>hbmtemplate_dto_custom</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>hbmtemplate</goal>
+            </goals>
+            <configuration>
+            	<components>
+            		<component>
+            			<name>hbmtemplate</name>
+            			<outputDirectory>target/hibernate3/generated-java-custom</outputDirectory>
+            			<implementation>configuration</implementation>
+            		</component>
+            	</components>
+            	<componentProperties>
+                    <configurationFile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationFile>
+                    <packagename>com.thepackage.dto</packagename>
+                    <jdk5>true</jdk5>
+                    <filepattern>{package-name}/{class-name}DTO.java</filepattern>
+                    <exporterclass>com.axiomalaska.hibernatetoolsdto.EnhancedPOJOExporter</exporterclass>
+                    <template>DTOCustom/CustomDTO.ftl</template>
+            	</componentProperties>
+            </configuration>
+        </execution>
+        
+		<execution>
+            <id>hbmtemplate_actionscript</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>hbmtemplate</goal>
+            </goals>
+            <configuration>
+            	<components>
+            		<component>
+            			<name>hbmtemplate</name>
+            			<outputDirectory>target/hibernate3/generated-actionscript</outputDirectory>
+            			<implementation>configuration</implementation>
+            		</component>
+            	</components>
+            	<componentProperties>
+                    <configurationFile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationFile>
+                    <packagename>com.thepackage.dto</packagename>
+                    <suffixDTOParentIds>false</suffixDTOParentIds>
+                    <filepattern>{package-name}/{class-name}Generated.as</filepattern>
+                    <exporterclass>com.axiomalaska.hibernatetoolsdto.EnhancedPOJOExporter</exporterclass>
+                    <template>actionscriptDTO/actionscriptDTO.ftl</template>
+            	</componentProperties>
+            </configuration>
+        </execution>		        
+		<execution>
+            <id>hbmtemplate_actionscript_custom</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>hbmtemplate</goal>
+            </goals>
+            <configuration>
+            	<components>
+            		<component>
+            			<name>hbmtemplate</name>
+            			<outputDirectory>target/hibernate3/generated-actionscript-custom</outputDirectory>
+            			<implementation>configuration</implementation>
+            		</component>
+            	</components>
+            	<componentProperties>
+                    <configurationFile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationFile>
+                    <packagename>com.thepackage.dto</packagename>
+                    <filepattern>{package-name}/{class-name}.as</filepattern>
+                    <exporterclass>com.axiomalaska.hibernatetoolsdto.EnhancedPOJOExporter</exporterclass>
+                    <template>actionscriptDTOCustom/actionscriptDTOCustom.ftl</template>
+            	</componentProperties>
+            </configuration>
+        </execution>		        
+    </executions>
+    <dependencies>
+		<dependency>
+		    <groupId>postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>9.1-901.jdbc4</version>
+		</dependency>			    	
+		
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>2.2</version>
+		</dependency>
+	
+		<dependency>
+		    <groupId>com.axiomalaska</groupId>
+		    <artifactId>hibernate-tools-dto</artifactId>
+		    <version>0.1-SNAPSHOT</version>
+		</dependency>		 	
+		 
+		<dependency>	
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-tools</artifactId>
+		    <version>3.6.8-SNAPSHOT</version>
+		</dependency>		
+								
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.6.8.Final</version>
+		</dependency>
+		 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+								
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.6.4</version>
+		</dependency> 	
+    </dependencies>
+</plugin>

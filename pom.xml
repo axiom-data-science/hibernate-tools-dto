@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.axiomalaska</groupId>
+	<artifactId>hibernate-tools-dto</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<name>hibernate-tools-dto</name>
+	
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<repositories>
+		<repository>
+			<id>axiom-nexus</id>
+			<url>http://nexus.axiomalaska.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>	
+	
+	<distributionManagement>
+	    <repository>
+	        <id>axiom_public_releases</id>
+	        <name>Axiom Releases</name>
+	        <uniqueVersion>false</uniqueVersion>
+	        <url>http://nexus.axiomalaska.com/nexus/content/repositories/public-releases</url>
+	    </repository>
+	    <snapshotRepository>
+	        <id>axiom_public_snapshots</id>
+	        <name>Axiom Snapshots</name>
+	        <uniqueVersion>false</uniqueVersion>
+	        <url>http://nexus.axiomalaska.com/nexus/content/repositories/public-snapshots</url>
+	    </snapshotRepository>
+	</distributionManagement>
+	
+	<build>
+	    <finalName>${project.artifactId}</finalName>
+	    <plugins>
+	        <plugin>
+	            <artifactId>maven-compiler-plugin</artifactId>
+	            <version>2.1</version>
+	            <configuration>
+	                <target>1.5</target>
+	                <source>1.5</source>
+	            </configuration>
+	        </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-source-plugin</artifactId>
+		        <version>2.1.2</version>
+		        <executions>
+		            <execution>
+		                <goals>
+		                    <goal>jar</goal>
+		                    <goal>test-jar</goal>
+		                </goals>
+		            </execution>
+		        </executions>
+		    </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>2.3.1</version>
+		        <executions>
+		            <execution>
+		                <goals>
+		                    <goal>test-jar</goal>
+		                </goals>
+		            </execution>
+		        </executions>
+		    </plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+	    <dependency>
+	        <groupId>junit</groupId>
+	        <artifactId>junit</artifactId>
+	        <version>3.8.1</version>
+	        <scope>test</scope>
+	    </dependency>	     
+	    <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-tools</artifactId>
+	        <version>3.6.8-SNAPSHOT</version>
+	    </dependency>
+	</dependencies>
+</project>
