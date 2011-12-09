@@ -21,6 +21,9 @@ Another note: this project has only been tested on fairly clean and simple data 
 (no compound primary keys, no component classes). It does work with Hibernate classes with
 inheritance.
 
+This project current depends on a fork of the Hibernate Tools project that supports
+Hibernate 3.6.X (https://github.com/axiomalaska/hibernate-tools/tree/3.6.X), but should
+be able to work with current stable versions without problems.
 
 
 Templates

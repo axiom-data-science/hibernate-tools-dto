@@ -164,7 +164,7 @@ public class EnhancedPOJOExporter extends GenericExporter {
 		Configuration cfg = this.getConfiguration();
 
 		@SuppressWarnings("unchecked")
-        Iterator<Property> it = element.getAllPropertiesIterator();
+		Iterator<Property> it = element.getAllPropertiesIterator();
 
 		Map<String, POJOClass> referencedPojos = new HashMap<String, POJOClass>();
 		while(it.hasNext()) {
@@ -183,7 +183,7 @@ public class EnhancedPOJOExporter extends GenericExporter {
 		additionalContext.put("clazz", element.getDecoratedObject());
 		additionalContext.put("referencedPojos", referencedPojos);
 		additionalContext.put("excludedTypesList", getExcludedTypesList() );
-        additionalContext.put("internalPackageName", getPackageNameForFile( element ) );
+		additionalContext.put("internalPackageName", getPackageNameForFile( element ) );
 		additionalContext.put("packageDeclaration", getPackageDeclaration( getPackageNameForFile( element ) ) );
 		additionalContext.put("remoteClassPackageName", getRemoteClassPackage( element ) );
 		additionalContext.put("suffixDTOParentIdsBool", suffixDTOParentIds() );
