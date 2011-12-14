@@ -5,6 +5,7 @@ import java.sql.Clob;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.hibernate.mapping.Property;
 import org.hibernate.tool.hbm2x.Cfg2JavaTool;
@@ -82,7 +83,12 @@ public final class ActionscriptTranslator extends AbstractTranslator {
         //Clob
         FLEX_TYPES.put( Clob.class.getName(), new FlexType( "String" ) );
         FLEX_TYPES.put( Clob.class.getSimpleName(), new FlexType( "String" ) );
-        FLEX_TYPES.put( Clob.class.getCanonicalName(), new FlexType( "String" ) );
+        FLEX_TYPES.put( Clob.class.getCanonicalName(), new FlexType( "String" ) );                
+
+        //UUID
+        FLEX_TYPES.put( UUID.class.getName(), new FlexType( "String" ) );
+        FLEX_TYPES.put( UUID.class.getSimpleName(), new FlexType( "String" ) );
+        FLEX_TYPES.put( UUID.class.getCanonicalName(), new FlexType( "String" ) );                    
     }
 
     public String getActionscriptTypeName( Property p ){
