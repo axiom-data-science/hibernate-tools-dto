@@ -169,7 +169,7 @@ public class EnhancedPOJOExporter extends GenericExporter {
 		Map<String, POJOClass> referencedPojos = new HashMap<String, POJOClass>();
 		while(it.hasNext()) {
 			Property prop = it.next();
-			log.info(prop.getName());
+			
 			if( prop.getType() instanceof ManyToOneType ){
 				ManyToOneType manyToOne = (ManyToOneType) prop.getType(); 
 				PersistentClass referencedEntity = cfg.getClassMapping( manyToOne.getAssociatedEntityName() );
