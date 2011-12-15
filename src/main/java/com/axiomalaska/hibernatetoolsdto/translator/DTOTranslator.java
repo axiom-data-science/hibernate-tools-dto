@@ -3,6 +3,7 @@ package com.axiomalaska.hibernatetoolsdto.translator;
 import java.sql.Clob;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import org.hibernate.mapping.Property;
@@ -34,6 +35,18 @@ public class DTOTranslator extends AbstractTranslator {
     	);    	
     	DTO_TYPES.put( "Geometry", geometryType );
     	DTO_TYPES.put( "com.vividsolutions.jts.geom.Geometry", geometryType );    
+
+    	//UUID
+    	DTOType uuidType = new DTOType(
+    		 "String"
+    		,false
+    		,"UUID.fromString( ? )"
+    		,"?.toString()"
+    	);    	
+    	DTO_TYPES.put( UUID.class.getName(), uuidType );
+    	DTO_TYPES.put( UUID.class.getSimpleName(), uuidType );
+    	DTO_TYPES.put( UUID.class.getCanonicalName(), uuidType );
+
     }	
 	
     public DTOTranslator(POJOClass pojo, Cfg2JavaTool c2j) {
@@ -79,6 +92,10 @@ public class DTOTranslator extends AbstractTranslator {
     }
 
     public String getDtoToPojo( Property p, boolean jdk5 ){
+    	return getDtoToPojo( null, p, jdk5 );
+    }
+    
+    public String getDtoToPojo( String getterPrefix, Property p, boolean jdk5 ){
     	String typeName = pojo.getJavaTypeName( p, jdk5 );
     	
     	BasicPOJOClass bpc = null;
@@ -87,7 +104,7 @@ public class DTOTranslator extends AbstractTranslator {
     	} else {
     		return null;
     	}
-        String getterSig = bpc.getGetterSignature( p ) + "()";;
+        String getterSig = getterPrefix + bpc.getGetterSignature( p ) + "()";
         
         DTOType dtoType = DTO_TYPES.get( typeName );        
         if( dtoType != null && dtoType.getGetConversion() != null ){

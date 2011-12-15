@@ -74,7 +74,7 @@
 		<#if dtoTranslator.excludeFromDto( pojoProperty )>
 		// excluded ${pojoProperty.name}
 		<#else>
-		set${pojo.getPropertyName(pojoProperty)}( dto.${dtoTranslator.getDtoToPojo( pojoProperty, jdk5 )} );
+		set${pojo.getPropertyName(pojoProperty)}( ${dtoTranslator.getDtoToPojo( "dto.", pojoProperty, jdk5 )} );
 		</#if>
 	</#if>
 	</#foreach>
