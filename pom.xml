@@ -14,11 +14,11 @@
 			<url>http://www.gnu.org/licenses/lgpl.html</url>
 		</license>
 	</licenses>
-		
+
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<repositories>
 		<repository>
 			<id>axiom-nexus</id>

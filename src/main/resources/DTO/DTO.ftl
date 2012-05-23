@@ -92,6 +92,38 @@ ${pojo.getClassModifiers()} ${pojo.getDeclarationType()} ${pojo.getDeclarationNa
 </#if>
 </#if>
 </#foreach>
+
+<#if pojo.needsEqualsHashCode() && !clazz.superclass?exists>   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+         if ( (other == null ) ) return false;
+         if ( !(other instanceof ${pojo.getDeclarationName()}DTO) ) return false;
+         ${pojo.getDeclarationName()}DTO castOther = ( ${pojo.getDeclarationName()}DTO ) other; 
+         
+         return ${pojo.generateEquals("this", "castOther", jdk5)};
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+<#foreach property in pojo.getAllPropertiesIterator()>         ${pojo.generateHashCode(property, "result", "this", jdk5)}
+</#foreach>         return result;
+   }   
+</#if>
+
+<#if pojo.needsToString()>    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+      StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+<#foreach property in pojo.getToStringPropertiesIterator()>      buffer.append("${property.getName()}").append("='").append(${pojo.getGetterSignature(property)}()).append("' ");           
+</#foreach>      buffer.append("]");
+      
+      return buffer.toString();
+     }
+</#if>
 }
 </#assign>
 
