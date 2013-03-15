@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.axiomalaska</groupId>
   <artifactId>hibernate-tools-dto</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>3.6.0.CR1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>hibernate-tools-dto</name>
@@ -96,7 +96,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-tools</artifactId>
-      <version>3.6.8-SNAPSHOT</version>
+      <version>3.6.0.CR1</version>
     </dependency>
   </dependencies>
 </project>
