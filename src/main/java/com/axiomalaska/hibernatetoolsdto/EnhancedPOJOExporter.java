@@ -17,7 +17,6 @@ import org.hibernate.tool.hbm2x.TemplateProducer;
 import org.hibernate.tool.hbm2x.pojo.EntityPOJOClass;
 import org.hibernate.tool.hbm2x.pojo.POJOClass;
 import org.hibernate.type.ManyToOneType;
-import org.hibernate.type.Type;
 
 import com.axiomalaska.hibernatetoolsdto.translator.ActionscriptTranslator;
 import com.axiomalaska.hibernatetoolsdto.translator.DTOTranslator;
