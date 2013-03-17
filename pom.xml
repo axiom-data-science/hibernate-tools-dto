@@ -64,6 +64,7 @@
         <version>2.1.2</version>
         <executions>
           <execution>
+            <id>attach-sources</id>
             <goals>
               <goal>jar</goal>
               <goal>test-jar</goal>
