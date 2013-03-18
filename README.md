@@ -71,71 +71,71 @@ In addition to the normal hbmtemplate parameters, these additional parameters ar
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>hibernate3-maven-plugin</artifactId>
             <executions>
-        <execution>
-          <id>hbm2hbmxml</id>
-          <phase>initialize</phase>
-          <goals>
-            <goal>run</goal>
-          </goals>            
-          <configuration>
-            <hibernatetool destdir="target/generated-resources/hibernate3">
-              <jdbcconfiguration
-          configurationfile="src/main/config/base.hibernate.cfg.xml"
-          packagename="${project.groupId}.oikos.vo"
-          reversestrategy="com.axiomalaska.oikos.reveng.CustomReverseEngineeringStrategy"
-          />
-              <hbm2hbmxml />
-            </hibernatetool>
-          </configuration>
-        </execution>
+              <execution>
+                <id>hbm2hbmxml</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>            
+                <configuration>
+                  <hibernatetool destdir="target/generated-resources/hibernate3">
+                    <jdbcconfiguration
+                      configurationfile="src/main/config/base.hibernate.cfg.xml"
+                      packagename="${project.groupId}.oikos.vo"
+                      reversestrategy="com.axiomalaska.oikos.reveng.CustomReverseEngineeringStrategy"
+                    />
+                    <hbm2hbmxml />
+                  </hibernatetool>
+                </configuration>
+              </execution>
             </executions>
             <dependencies>
-        <dependency>
-          <groupId>postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>${postgres-version}</version>
-        </dependency>             
-        <dependency>
-          <groupId>cglib</groupId>
-          <artifactId>cglib</artifactId>
-          <version>${cglib-version}</version>
-        </dependency>
-        <dependency>
-          <groupId>com.axiomalaska</groupId>
-          <artifactId>hibernate-tools-dto</artifactId>
-          <version>${hibernate-tools-dto-version}</version>
-        </dependency>   
-        <dependency>  
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-tools</artifactId>
-          <version>${hibernate-tools-version}</version>
-          <exclusions>
-            <exclusion>
-              <artifactId>ant</artifactId>
-              <groupId>ant</groupId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-core</artifactId>
-          <version>${hibernate-version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-simple</artifactId>
-          <version>${slf4j-version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-          <version>${slf4j-version}</version>             
-        </dependency>
-        <dependency>
-          <groupId>org.apache.ant</groupId>
-          <artifactId>ant</artifactId>
-          <version>${ant-version}</version>
-        </dependency>
+              <dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgres-version}</version>
+              </dependency>             
+              <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib-version}</version>
+              </dependency>
+              <dependency>
+                <groupId>com.axiomalaska</groupId>
+                <artifactId>hibernate-tools-dto</artifactId>
+                <version>${hibernate-tools-dto-version}</version>
+              </dependency>   
+              <dependency>  
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-tools</artifactId>
+                <version>${hibernate-tools-version}</version>
+                <exclusions>
+                  <exclusion>
+                    <artifactId>ant</artifactId>
+                    <groupId>ant</groupId>
+                  </exclusion>
+                </exclusions>
+              </dependency>
+              <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j-version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-version}</version>             
+              </dependency>
+              <dependency>
+                <groupId>org.apache.ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>${ant-version}</version>
+              </dependency>
             </dependencies>
           </plugin>
         </plugins>
