@@ -81,8 +81,8 @@ In addition to the normal hbmtemplate parameters, these additional parameters ar
                   <hibernatetool destdir="target/generated-resources/hibernate3">
                     <jdbcconfiguration
                       configurationfile="src/main/config/base.hibernate.cfg.xml"
-                      packagename="${project.groupId}.oikos.vo"
-                      reversestrategy="com.axiomalaska.oikos.reveng.CustomReverseEngineeringStrategy"
+                      packagename="${project.groupId}.myproject.vo"
+                      reversestrategy="com.axiomalaska.myproject.reveng.CustomReverseEngineeringStrategy"
                     />
                     <hbm2hbmxml />
                   </hibernatetool>
