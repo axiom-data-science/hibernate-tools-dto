@@ -94,8 +94,12 @@ public class DTOTranslator extends AbstractTranslator {
     public String getDtoToPojo( Property p, boolean jdk5 ){
     	return getDtoToPojo( null, p, jdk5 );
     }
-    
+
     public String getDtoToPojo( String getterPrefix, Property p, boolean jdk5 ){
+        return getDtoToPojo( getterPrefix, null, p, jdk5 );
+    }
+    
+    public String getDtoToPojo( String getterPrefix, String getterSuffix, Property p, boolean jdk5 ){
     	String typeName = pojo.getJavaTypeName( p, jdk5 );
     	
     	BasicPOJOClass bpc = null;
@@ -104,13 +108,22 @@ public class DTOTranslator extends AbstractTranslator {
     	} else {
     		return null;
     	}
-        String getterSig = getterPrefix + bpc.getGetterSignature( p ) + "()";
+    	
+    	StringBuilder getterSig = new StringBuilder();
+    	if( getterPrefix != null ){
+    	    getterSig.append( getterPrefix );
+    	}
+    	getterSig.append( bpc.getGetterSignature( p ) );
+        if( getterSuffix != null ){
+            getterSig.append( getterSuffix );
+        }
+        getterSig.append( "()" );
         
         DTOType dtoType = DTO_TYPES.get( typeName );        
         if( dtoType != null && dtoType.getGetConversion() != null ){
-        	getterSig = dtoType.getGetConversion().replaceAll( Pattern.quote("?"), getterSig );
+        	return dtoType.getGetConversion().replaceAll( Pattern.quote("?"), getterSig.toString() );
         }
-        return getterSig;        
+        return getterSig.toString();
     }
 
 	public String getFieldInitialization( Property prop, boolean jdk5 ){

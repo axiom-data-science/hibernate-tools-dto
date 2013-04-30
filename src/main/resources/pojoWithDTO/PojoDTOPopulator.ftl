@@ -22,7 +22,7 @@
 			<#assign targetPojo = referencedPojos.get( pojoProperty.getValue().getReferencedEntityName() ) />
 			<#assign targetProperty = targetPojo.getIdentifierProperty() />
 		if( ${pojo.getGetterSignature(pojoProperty)}() != null ){
-			dto.set${targetPojo.getPropertyName(targetProperty)}<#if suffixDTOParentIdsBool>${targetPojo.getDeclarationName()}</#if>( ${pojo.getGetterSignature(pojoProperty)}().${targetPojo.getGetterSignature(targetProperty)}() );
+			dto.set${targetPojo.getPropertyName(targetProperty)}<#if suffixDTOParentIdsBool>${targetPojo.getDeclarationName()}</#if>( ${pojo.getGetterSignature(pojoProperty)}().${dtoTranslator.getPojoToDto( targetProperty, jdk5 )} );
 		}
 		</#if>
 	<#else>
@@ -63,7 +63,7 @@
 			set${pojo.getPropertyName(pojoProperty)}(
 				(${pojo.getPropertyName(pojoProperty)}) session
 				.createCriteria(${pojo.getPropertyName(pojoProperty)}.class)
-				.add( ${pojo.importType("org.hibernate.criterion.Restrictions")}.idEq( dto.${targetPojo.getGetterSignature(targetProperty)}<#if suffixDTOParentIdsBool>${targetPojo.getDeclarationName()}</#if>() ) )
+				.add( ${pojo.importType("org.hibernate.criterion.Restrictions")}.idEq( <#if suffixDTOParentIdsBool>${dtoTranslator.getDtoToPojo( "dto.", targetPojo.getDeclarationName(), targetProperty, jdk5 )}<#else>${dtoTranslator.getDtoToPojo( "dto.", pojoProperty, jdk5 )}</#if> ) )
 				.uniqueResult()			
 			);
 		} else {

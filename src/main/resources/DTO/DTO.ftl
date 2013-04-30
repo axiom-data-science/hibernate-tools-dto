@@ -7,7 +7,7 @@ ${pojo.getClassJavaDoc(pojo.getDeclarationName() + "DTO (generated)", 0)}
  * Simple DTO class for data transactions with the client tier
  */
 
-${pojo.getClassModifiers()} ${pojo.getDeclarationType()} ${pojo.getDeclarationName()}DTO<#if generatedClassSuffix??>${generatedClassSuffix}<#else>Generated</#if><#if extendz??> extends ${pojo.importType(extendz)}</#if> ${pojo.getImplementsDeclaration()} {
+${pojo.getClassModifiers()} ${pojo.getDeclarationType()} ${pojo.getDeclarationName()}DTO<#if generatedClassSuffix??>${generatedClassSuffix}<#else>Generated</#if><#if extendz??> extends ${pojo.importType(extendz)}</#if> {
 
 <#-- // Fields -->
 <#foreach pojoProperty in pojo.getAllPropertiesIterator()>
